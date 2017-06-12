@@ -8,13 +8,18 @@ This library only need jquery: https://jquery.com/
 
 ## Usage
 
+```html
 <script type="text/javascript" src="crawler.min.js"></script>
+```
 
-var publicKey = ;
-var callback = function(crawler){StellarCrawler.callback(crawler);};
-StellarCrawler.start(publicKey, callback, true);
+```javascript
+var publicKey = 'GXXXXXXX123456789XXX';
+var callback = StellarCrawler.callback;
+var isPublicNetwork = true;
+StellarCrawler.start(publicKey, callback, isPublicNetwork);
+```
 
-Se the example for more information.
+See the example for more information.
 
 ## Donation
 

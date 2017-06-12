@@ -6,9 +6,11 @@
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 </head>
 <body>
-	<h1>init</h1>
-	<div id="links"><input type="text" id="seed" /><button type="button" onClick="StellarCrawler.start($('#seed').val(), function(crawler){StellarCrawler.callback(crawler);}, true);">Start</button></div>
-	<div id="data"></div>
+	<h1>Stellar crawler example</h1>
+	
+	<input type="text" id="seed" />
+	<button type="button" onClick="StellarCrawler.start($('#seed').val(), StellarCrawler.callback, true);">Start</button>
+	
 	<script type="text/javascript" src="../src/crawler.js"></script>
 </body>
 </html>

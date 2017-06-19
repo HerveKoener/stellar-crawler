@@ -8,7 +8,7 @@ var StellarCrawler = {
 			StellarCrawler.crawler.data = json;
 			var h = StellarCrawler.crawler.history;
 			
-			StellarCrawler.crawler.links = (h.length > 2)
+			StellarCrawler.crawler.links = (h.length > 1)
 				? [{'key' : 'back','link' : h[h.length-2]}]
 				: [];
 			$.map(json._links, function(value, key) {
@@ -17,18 +17,30 @@ var StellarCrawler = {
 			});
 			StellarCrawler.callback(StellarCrawler.crawler);
 		},
+		getLinks: function(){
+			return this.links;
+		},
+		getData: function(){
+			return this.data;
+		},
+		getHistory: function(){
+			return this.history;
+		},
 	},
 	Link : function(href){
 		this.href = href;
 		this.follow = function(){
 			var h = StellarCrawler.crawler.history;
-			if(h[h.length-2] === this){
+			if(h.length > 1 && h[h.length-2].getHref() === this.getHref()){
 				StellarCrawler.crawler.history.pop();
-			}else if(h[h.length-1] !== this){
+			}else if(h.length == 0 || h[h.length-1].getHref() !== this.getHref()){
 				StellarCrawler.crawler.history.push(this);
 			}
 
 			$.get(this.href, function(r){StellarCrawler.crawler.load(r)});
+		};
+		this.getHref = function(){
+			return this.href;
 		};
 	},
 	start : function(publicKey, callback, ispublic){

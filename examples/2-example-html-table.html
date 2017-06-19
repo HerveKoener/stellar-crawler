@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Stellar crawler - Example 2 - Html table</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="https://v4-alpha.getbootstrap.com/dist/css/bootstrap.min.css" type="text/css" media="all">
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="../src/crawler.js"></script>
+	<script type="text/javascript" src="../src/jquery-crawler-printer.js"></script>
+	<script type="text/javascript">
+		var callme = function callme(crawler){
+			$('#results').printCrawler(crawler);
+		}
+	</script>
+</head>
+<body>
+	<h1>Stellar crawler - Example 2 - Html table</h1>
+	<input type="text" id="seed" />
+	<button type="button" onClick="StellarCrawler.start($('#seed').val(), callme, true);">Start</button>
+	<div id="results"></div>
+</body>
+</html>

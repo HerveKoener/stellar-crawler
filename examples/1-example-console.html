@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Stellar crawler - Example 1 - Javascript Console</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="https://v4-alpha.getbootstrap.com/dist/css/bootstrap.min.css" type="text/css" media="all">
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="../src/crawler.js"></script>
+</head>
+<body>
+	<h1>Stellar crawler - Example 1 - Javascript Console</h1>
+	
+	<input type="text" id="seed" />
+	<button type="button" onClick="StellarCrawler.start($('#seed').val(), StellarCrawler.callback, true);">Start</button>
+</body>
+</html>

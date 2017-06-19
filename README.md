@@ -34,12 +34,47 @@ StellarCrawler.crawler.links contains an array of objects with:
 
 StellarCrawler.crawler.data contains the json representation of the data sent by the Stellar network.
 
-See the example for more information.
+See the examples for more information.
 
-## Donation
+# Pretty printing for the Stellar crawler
+
+If you want to generate readable html from the crawler data you can use the jquery-crawler-printer library.
+
+This is a simple read-only API for the stellar network.
+
+## Dependencies
+
+This library only need jquery: https://jquery.com/
+
+## Usage
+
+```html
+<script type="text/javascript" src="jquery-crawler-printer.min.js"></script>
+```
+
+```javascript
+	$('#results').printCrawler(crawler);
+```
+
+## Properties description
+
+printCrawler can take an optional parameter called "options".
+The options can have the following properties:
+
+ * isTree : Print the crawler data in html tree instead of html table.
+ * collapsed : if isTree is set, the tree will be collapsed.
+ * withQuotes :  add quotes arround Stellar json property name.
+ 
+```javascript
+	$('#results').printCrawler(crawler, {isTree:true});
+```
+
+See the examples for more information.
+
+# Donation
 
 XLM donations are welcome! : GC6ZIWMTBZZ54VWX6SJH4JEHRHWSE245O2EIW26CMGAS6PM2R4J6V4PH
 
-## License
+# License
 
 MIT

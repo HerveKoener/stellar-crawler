@@ -2,8 +2,8 @@ var StellarCrawler = {
 	callback : function(crawler){console.log(crawler.data.toSource())},
 	crawler : {
 		history: [],
-		links: [],
-		data: [],
+		links: null,
+		data: null,
 		load: function(json){
 			StellarCrawler.crawler.data = json;
 			var h = StellarCrawler.crawler.history;

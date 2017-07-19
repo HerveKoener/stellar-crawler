@@ -150,8 +150,8 @@
 	var json = crawler.getData();
 	
 	var l = crawler.links;
-	if(l.length > 0 && l[0].key === 'back'){
-		json._links.back = l[0].link.getHref();
+	if('back' in l){
+		json._links.back = l['back'].getHref();
 	}
 
     /* jQuery chaining */

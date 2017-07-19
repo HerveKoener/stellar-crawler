@@ -47,9 +47,9 @@ var StellarCrawler = {
 		this.href = href;
 		this.follow = function(){
 			var h = StellarCrawler.crawler.history;
-			if(h.length > 1 && h[h.length-2].getHref() === this.getHref()){
+			if(h.length > 1 && h[h.length-2].href === this.href){
 				StellarCrawler.crawler.history.pop();
-			}else if(h.length == 0 || h[h.length-1].getHref() !== this.getHref()){
+			}else if(h.length == 0 || h[h.length-1].href !== this.href){
 				StellarCrawler.crawler.history.push(this);
 			}
 

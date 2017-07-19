@@ -9,13 +9,20 @@ var StellarCrawler = {
 			var h = StellarCrawler.crawler.history;
 			
 			StellarCrawler.crawler.links = (h.length > 1)
-				? [{'key' : 'back','link' : h[h.length-2]}]
-				: [];
+				? {back : h[h.length-2]}
+				: {};
 			$.map(json._links, function(value, key) {
 				var href = value.href;
-				StellarCrawler.crawler.links.push({'key':key,'link' : new StellarCrawler.Link((href.indexOf('{') > 0)?href.substring(0, href.indexOf('{')):href)});
+				StellarCrawler.crawler.links[key] = new StellarCrawler.Link((href.indexOf('{') > 0)?href.substring(0, href.indexOf('{')):href);
 			});
 			StellarCrawler.callback(StellarCrawler.crawler);
+		},
+		_follow: function(key){
+			if(key in this.links){
+				this.links[key].follow();
+			}else{
+				throw new StellarCrawler.Exception("Link "+key+" not found.");
+			}
 		},
 		getLinks: function(){
 			return this.links;
@@ -25,6 +32,15 @@ var StellarCrawler = {
 		},
 		getHistory: function(){
 			return this.history;
+		},
+		followNext: function(){
+			this._follow('next');
+		},
+		followPrev: function(){
+			this._follow('prev');
+		},
+		followBack: function(){
+			this._follow('back');
 		},
 	},
 	Link : function(href){
@@ -43,9 +59,15 @@ var StellarCrawler = {
 			return this.href;
 		};
 	},
-	start : function(publicKey, callback, ispublic){
-		var server = (ispublic)?'https://horizon.stellar.org/accounts/':'https://horizon-testnet.stellar.org/accounts/';
+	newInstanceWithServer : function(publicKey, callback, server){
 		this.callback = callback;
-		(new StellarCrawler.Link(server+publicKey)).follow();
+		if(server.slice(-1) == '/'){
+			server = server.slice(0, -1);
+		}
+		(new StellarCrawler.Link(server+'/accounts/'+publicKey)).follow();
+	},
+	newInstance : function(publicKey, callback, ispublic){
+		var server = (ispublic)?'https://horizon.stellar.org':'https://horizon-testnet.stellar.org';
+		this.newInstanceWithServer(publicKey, callback, server);
 	},
 };

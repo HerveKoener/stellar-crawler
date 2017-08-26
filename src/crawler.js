@@ -1,5 +1,7 @@
 var StellarCrawler = {
 	callback : function(crawler){console.log(crawler.data.toSource())},
+	publicServer : 'https://horizon.stellar.org',
+	testServer : 'https://horizon-testnet.stellar.org',
 	crawler : {
 		history: [],
 		links: null,
@@ -59,15 +61,41 @@ var StellarCrawler = {
 			return this.href;
 		};
 	},
-	newInstanceWithServer : function(publicKey, callback, server){
+	setPublicServer: function(publicServer){
+		return this.publicServer = publicServer;
+	},
+	setTestServer: function(testServer){
+		return this.testServer = testServer;
+	},
+	newInstance : function(path, callback, server){
 		this.callback = callback;
 		if(server.slice(-1) == '/'){
 			server = server.slice(0, -1);
 		}
-		(new StellarCrawler.Link(server+'/accounts/'+publicKey)).follow();
+		if(path == ''){
+			path = '/ledgers/';
+		}
+		(new StellarCrawler.Link(server+path)).follow();
 	},
-	newInstance : function(publicKey, callback, ispublic){
-		var server = (ispublic)?'https://horizon.stellar.org':'https://horizon-testnet.stellar.org';
-		this.newInstanceWithServer(publicKey, callback, server);
+	forAccount : function(publicKey, callback, ispublic){
+		var server = (ispublic)?this.publicServer:testServer;
+		console.log(server);
+		this.newInstance('/accounts/'+publicKey, callback, server);
+	},
+	forLedger : function(sequence, callback, ispublic){
+		var server = (ispublic)?publicServer:testServer;
+		this.newInstance('/ledgers/'+sequence, callback, server);
+	},
+	forOperation : function(id, callback, ispublic){
+		var server = (ispublic)?publicServer:testServer;
+		this.newInstance('/operations/'+id, callback, server);
+	},
+	forTransaction : function(hash, callback, ispublic){
+		var server = (ispublic)?publicServer:testServer;
+		this.newInstance('/transactions/'+hash, callback, server);
+	},
+	forLink : function(stellarLink, callback){
+		this.callback = callback;
+		stellarLink.follow();
 	},
 };

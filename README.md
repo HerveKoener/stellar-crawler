@@ -22,20 +22,21 @@ StellarCrawler provides a [Javascript Minified file](https://github.com/HerveKoe
 var publicKey = 'GXXXXXXX123456789XXX';
 var callback = StellarCrawler.callback;
 var isPublicNetwork = true;
-StellarCrawler.newInstance(publicKey, callback, isPublicNetwork);
+StellarCrawler.forAccount(publicKey, callback, isPublicNetwork);
 ```
 
 ## Basic Usage
 
 ### Instanciation
 
-First of all you need to instanciate your **crawler** by using the *newInstance* factory method:
+This section explain how to crawl Stellar accounts.
+First of all you need to instanciate your **crawler** by using the *forAccount* factory method:
 
 ```javascript
 var publicKey = 'GXXXXXXX123456789XXX';
 var callback = StellarCrawler.callback;
 var isPublicNetwork = true;
-StellarCrawler.newInstance(publicKey, callback, isPublicNetwork);
+StellarCrawler.forAccount(publicKey, callback, isPublicNetwork);
 ```
 
 ### Navigation
@@ -72,15 +73,26 @@ console.log(StellarCrawler.crawler.getData());
 
 ### Instanciation with custom horizon server
 
-The API provide another way to instanciate the StellarCrawler. The public factory method **newInstanceWithServer** allows to instanciate the crawler with custom horizon server:
+The API provide another way to instanciate the StellarCrawler. The public factory method **newInstance** allows to instanciate the crawler with custom horizon server:
 
 ```javascript
-var publicKey = 'GXXXXXXX123456789XXX';
+var path = '/accounts/GXXXXXXX123456789XXX';
 var callback = StellarCrawler.callback;
 var horizonServer = 'https://horizon-testnet.stellar.org';
-StellarCrawler.newInstanceWithServer(publicKey, callback, horizonServer);
+StellarCrawler.newInstance(path, callback, horizonServer);
 ```
 
+### Other instanciation methods
+
+The API provide many other ways to instanciate the StellarCrawler. Here is the list of available methods:
+
+ * **StellarCrawler.forAccounty(publicKey, callback, ispublic)** : instanciate a new StellarCrawler based on a public key.
+ * **StellarCrawler.forLedger(sequence, callback, ispublic)** : instanciate a new StellarCrawler based on ledger's sequence id.
+ * **StellarCrawler.forOperation(id, callback, ispublic)** : instanciate a new StellarCrawler based on an operation ID.
+ * **StellarCrawler.forTransaction(hash, callback, ispublic)** : instanciate a new StellarCrawler based on transaction hash.
+ * **StellarCrawler.forLink(stellarLink, callback)** : instanciate a new StellarCrawler based on a stellar link.
+ * **StellarCrawler.newInstance(path, callback, server)** : instanciate a new StellarCrawler based on custom path.
+ 
 ### Historisation
 
 StellarCrawler API provide a historisation mechanism in order to keep track of your journey in the Stellar network. The simplest way to use the historisation mechanism is to call the **followBack()** method. But you can retrieve the full history by calling **getHistory()**:
@@ -111,6 +123,18 @@ console.log(StellarCrawler.crawler.getData());
 **StellarCrawler.crawler.followBack()** follows the 'back' link if available. If the current page doesn't contain a 'back' link, a StellarCrawlerException is thrown. *This method is the same as using StellarCrawler.crawler.getlinks()['back']->follow();*
 
 **See the example for more information.**
+
+### Customise test and public network for factory methods
+
+The API provide a way to customize the url of the test/public network used by the StellarCrawler. The public methods **setPublicServer** and **setTestServer** allow to customize the horizon server used by the factory methods:
+
+```javascript
+var path = '/accounts/GXXXXXXX123456789XXX';
+var callback = StellarCrawler.callback;
+var horizonServer = 'https://horizon-testnet.stellar.org';
+StellarCrawler.setPublicServer(horizonServer);
+StellarCrawler.forAccounty(path, callback, true);
+```
 
 # Pretty printing for the Stellar crawler
 

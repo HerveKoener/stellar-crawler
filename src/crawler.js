@@ -83,15 +83,15 @@ var StellarCrawler = {
 		this.newInstance('/accounts/'+publicKey, callback, server);
 	},
 	forLedger : function(sequence, callback, ispublic){
-		var server = (ispublic)?publicServer:testServer;
+		var server = (ispublic)?this.publicServer:testServer;
 		this.newInstance('/ledgers/'+sequence, callback, server);
 	},
 	forOperation : function(id, callback, ispublic){
-		var server = (ispublic)?publicServer:testServer;
+		var server = (ispublic)?this.publicServer:testServer;
 		this.newInstance('/operations/'+id, callback, server);
 	},
 	forTransaction : function(hash, callback, ispublic){
-		var server = (ispublic)?publicServer:testServer;
+		var server = (ispublic)?this.publicServer:testServer;
 		this.newInstance('/transactions/'+hash, callback, server);
 	},
 	forLink : function(stellarLink, callback){
